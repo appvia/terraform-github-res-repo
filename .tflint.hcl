@@ -1,9 +1,3 @@
-plugin "azurerm" {
-    enabled = true
-    version = "0.32.0"
-    source  = "github.com/terraform-linters/tflint-ruleset-azurerm" # cbb7d28d0abde4fccf1034a4eabb6308510ecf8f
-}
-
 plugin "terraform" {
   enabled = true
   version = "0.15.0"
