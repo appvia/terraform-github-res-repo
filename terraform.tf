@@ -1,12 +1,13 @@
-
 terraform {
-  required_version = ">= 1.9.0"
-
+  required_version = ">= 1.14"
   required_providers {
-    # tflint-ignore: terraform_unused_required_providers
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">= 4.14.0"
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.13"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
     }
   }
 }
