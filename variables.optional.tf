@@ -414,9 +414,9 @@ variable "enterprise_features_enabled" {
 }
 
 variable "oidc_subject_claim_keys" {
-  description = "OPTIONAL: Ordered claim keys used to build the OIDC subject claim in federated credentials. Order is significant. Set to null or [] to use GitHub's default subject claim. Defaults to [\"repository\", \"repository_id\", \"repository_owner_id\", \"job_workflow_ref\", \"ref\", \"environment\"]."
+  description = "OPTIONAL: Ordered claim keys used to build the OIDC subject claim in federated credentials. Order is significant. Set to null or [] to use GitHub's default subject claim. Defaults to [\"repo\", \"environment\", \"job_workflow_ref\"]."
   type        = list(string)
-  default     = ["repository", "repository_id", "repository_owner_id", "job_workflow_ref", "ref", "environment"]
+  default     = ["repo", "environment", "job_workflow_ref"]
   validation {
     condition     = var.oidc_subject_claim_keys == null || alltrue([for k in var.oidc_subject_claim_keys : can(regex("^[A-Za-z0-9_]+$", k))])
     error_message = "Each claim key must contain only alphanumeric characters and underscores."
