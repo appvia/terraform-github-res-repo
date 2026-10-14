@@ -133,8 +133,10 @@ See the [examples](./examples) directory for working usage examples.
 
 | Name | Version |
 | ---- | ------- |
+| <a name="provider_external"></a> [external](#provider\_external) | n/a |
 | <a name="provider_github"></a> [github](#provider\_github) | ~> 6.13 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6 |
+| <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
@@ -164,6 +166,7 @@ No modules.
 | [github_team_repository.this](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository) | resource |
 | [github_team_sync_group_mapping.this](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_sync_group_mapping) | resource |
 | [random_password.dependabot_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [terraform_data.immutable_releases](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 
 ## Inputs
 
@@ -196,11 +199,12 @@ No modules.
 | <a name="input_enterprise_features_enabled"></a> [enterprise\_features\_enabled](#input\_enterprise\_features\_enabled) | OPTIONAL: Whether enterprise licensing is enabled. This gates relevant features that are not available without this. Defaults to 'true'. | `bool` | `true` | no |
 | <a name="input_github_actions_sha_pinning_required"></a> [github\_actions\_sha\_pinning\_required](#input\_github\_actions\_sha\_pinning\_required) | OPTIONAL: Whether GitHub actions require SHA pinning for action references. Defaults to 'true' for enhanced security. | `bool` | `true` | no |
 | <a name="input_identity_provider_model"></a> [identity\_provider\_model](#input\_identity\_provider\_model) | OPTIONAL: How GitHub team membership is synced with the identity provider<br/>(Entra ID), for teams that opt in via idp\_group\_name on var.teams. One of:<br/><br/>- saml\_team\_sync: GHEC SAML SSO + Team Sync (needs enterprise owner<br/>  one-time setup + Graph consent). Links via github\_team\_sync\_group\_mapping<br/>  using the raw Entra group object ID (idp\_group\_id).<br/>- enterprise\_managed\_users: GitHub EMU + SCIM (needs SCIM provisioning<br/>  against Entra already configured). Links via github\_emu\_group\_mapping,<br/>  resolving idp\_group\_name against GitHub's SCIM external groups -<br/>  idp\_group\_id is not used.<br/>- standalone: no native GitHub<->IdP linkage. idp\_group\_name/idp\_group\_id<br/>  must not be set; membership can be managed via each team's `members`.<br/><br/>Defaults to 'standalone'. | `string` | `"standalone"` | no |
+| <a name="input_immutable_releases"></a> [immutable\_releases](#input\_immutable\_releases) | OPTIONAL: Whether immutable releases are enabled for the repository. Defaults to 'false'. | `bool` | `false` | no |
 | <a name="input_issue_labels"></a> [issue\_labels](#input\_issue\_labels) | OPTIONAL: Issue labels to create on the repository, keyed by label name. Color is a 6 character hex code without the leading '#'. | <pre>map(object({<br/>    color       = string<br/>    description = optional(string, "")<br/>  }))</pre> | <pre>{<br/>  "security": {<br/>    "color": "EE0701",<br/>    "description": "Security-related issue, e.g. secret scanning, vulnerability alerts, or Dependabot"<br/>  },<br/>  "terraform-bug": {<br/>    "color": "D93F0B",<br/>    "description": "Something is broken in the Terraform configuration or module"<br/>  },<br/>  "terraform-drift": {<br/>    "color": "FBCA04",<br/>    "description": "Live infrastructure has drifted from the Terraform configuration"<br/>  },<br/>  "workflow-bug": {<br/>    "color": "B60205",<br/>    "description": "Something is broken in a GitHub Actions workflow"<br/>  }<br/>}</pre> | no |
 | <a name="input_issues_enabled"></a> [issues\_enabled](#input\_issues\_enabled) | OPTIONAL: Whether or not GitHub issues are enabled on the repository. Defaults to 'true'. | `bool` | `true` | no |
 | <a name="input_merge_commit_message"></a> [merge\_commit\_message](#input\_merge\_commit\_message) | OPTIONAL: What to use for merge commit message. One of 'PR\_BODY', 'PR\_TITLE', or 'BLANK'. Defaults to 'PR\_TITLE' - GitHub only allows merge\_commit\_title = 'MERGE\_MESSAGE' paired with merge\_commit\_message = 'PR\_TITLE'. | `string` | `"PR_TITLE"` | no |
 | <a name="input_merge_commit_title"></a> [merge\_commit\_title](#input\_merge\_commit\_title) | OPTIONAL: What to use for merge commit title. One of 'PR\_TITLE' or 'MERGE\_MESSAGE'. Defaults to 'MERGE\_MESSAGE'. | `string` | `"MERGE_MESSAGE"` | no |
-| <a name="input_oidc_subject_claim_keys"></a> [oidc\_subject\_claim\_keys](#input\_oidc\_subject\_claim\_keys) | OPTIONAL: Ordered claim keys used to build the OIDC subject claim in federated credentials. Order is significant. Set to null or [] to use GitHub's default subject claim. Defaults to ["repository", "repository\_id", "repository\_owner\_id", "job\_workflow\_ref", "ref", "environment"]. | `list(string)` | <pre>[<br/>  "repository",<br/>  "repository_id",<br/>  "repository_owner_id",<br/>  "job_workflow_ref",<br/>  "ref",<br/>  "environment"<br/>]</pre> | no |
+| <a name="input_oidc_subject_claim_keys"></a> [oidc\_subject\_claim\_keys](#input\_oidc\_subject\_claim\_keys) | OPTIONAL: Ordered claim keys used to build the OIDC subject claim in federated credentials. Order is significant. Set to null or [] to use GitHub's default subject claim. Defaults to ["repo", "environment", "job\_workflow\_ref"]. | `list(string)` | <pre>[<br/>  "repo",<br/>  "environment",<br/>  "job_workflow_ref"<br/>]</pre> | no |
 | <a name="input_projects_enabled"></a> [projects\_enabled](#input\_projects\_enabled) | OPTIONAL: Whether or not GitHub projects are enabled on the repository. Defaults to 'false'. | `bool` | `false` | no |
 | <a name="input_pull_request_reviewer_count"></a> [pull\_request\_reviewer\_count](#input\_pull\_request\_reviewer\_count) | OPTIONAL: The number of reviewers required on pull requests. Must be >= 0. Defaults to 1. | `number` | `1` | no |
 | <a name="input_push_ruleset_enabled"></a> [push\_ruleset\_enabled](#input\_push\_ruleset\_enabled) | OPTIONAL: Whether to create the push ruleset (file path/size/extension restrictions). Requires GitHub Team or Enterprise Cloud. Defaults to 'false'. | `bool` | `false` | no |
