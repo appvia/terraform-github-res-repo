@@ -582,3 +582,9 @@ variable "github_actions_sha_pinning_required" {
   type        = bool
   default     = true
 }
+
+variable "immutable_releases" {
+  description = "OPTIONAL: Whether immutable releases are enabled for the repository. Defaults to 'false'."
+  type        = bool
+  default     = false
+}
